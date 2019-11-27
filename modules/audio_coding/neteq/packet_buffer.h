@@ -131,6 +131,10 @@ class PacketBuffer {
   virtual bool ContainsDtxOrCngPacket(
       const DecoderDatabase* decoder_database) const;
 
+  virtual void AddDuration(const Packet& packet);
+
+  virtual void RemoveDuration(const Packet& packet);
+
   // Static method returning true if |timestamp| is older than |timestamp_limit|
   // but less than |horizon_samples| behind |timestamp_limit|. For instance,
   // with timestamp_limit = 100 and horizon_samples = 10, a timestamp in the
@@ -146,7 +150,8 @@ class PacketBuffer {
   }
 
  private:
-  size_t max_number_of_packets_;
+  size_t total_duration_of_packets_;
+  size_t max_duration_of_packets_;
   PacketList buffer_;
   const TickTimer* tick_timer_;
   RTC_DISALLOW_COPY_AND_ASSIGN(PacketBuffer);

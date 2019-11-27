@@ -27,7 +27,7 @@ std::string NetEq::Config::ToString() const {
   rtc::SimpleStringBuilder ss(buf);
   ss << "sample_rate_hz=" << sample_rate_hz << ", enable_post_decode_vad="
      << (enable_post_decode_vad ? "true" : "false")
-     << ", max_packets_in_buffer=" << max_packets_in_buffer
+     << ", max_duration_in_buffer=" << max_duration_in_buffer
      << ", min_delay_ms=" << min_delay_ms << ", enable_fast_accelerate="
      << (enable_fast_accelerate ? "true" : "false")
      << ", enable_muted_state=" << (enable_muted_state ? "true" : "false")

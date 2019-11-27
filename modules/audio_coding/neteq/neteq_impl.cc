@@ -70,7 +70,7 @@ NetEqImpl::Dependencies::Dependencies(
           new DecoderDatabase(decoder_factory, config.codec_pair_id)),
       delay_peak_detector(
           new DelayPeakDetector(tick_timer.get(), config.enable_rtx_handling)),
-      delay_manager(DelayManager::Create(config.max_packets_in_buffer,
+      delay_manager(DelayManager::Create(config.max_duration_in_buffer,
                                          config.min_delay_ms,
                                          config.enable_rtx_handling,
                                          delay_peak_detector.get(),
@@ -79,7 +79,7 @@ NetEqImpl::Dependencies::Dependencies(
       dtmf_buffer(new DtmfBuffer(config.sample_rate_hz)),
       dtmf_tone_generator(new DtmfToneGenerator),
       packet_buffer(
-          new PacketBuffer(config.max_packets_in_buffer, tick_timer.get())),
+          new PacketBuffer(config.max_duration_in_buffer, tick_timer.get())),
       red_payload_splitter(new RedPayloadSplitter),
       timestamp_scaler(new TimestampScaler(*decoder_database)),
       accelerate_factory(new AccelerateFactory),

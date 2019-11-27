@@ -79,7 +79,7 @@ AudioCodingModule::Config AcmConfig(
   AudioCodingModule::Config acm_config;
   acm_config.decoder_factory = decoder_factory;
   acm_config.neteq_config.codec_pair_id = codec_pair_id;
-  acm_config.neteq_config.max_packets_in_buffer = jitter_buffer_max_packets;
+  //acm_config.neteq_config.max_duration_in_buffer = jitter_buffer_max_packets;
   acm_config.neteq_config.enable_fast_accelerate = jitter_buffer_fast_playout;
   acm_config.neteq_config.enable_muted_state = true;
 
