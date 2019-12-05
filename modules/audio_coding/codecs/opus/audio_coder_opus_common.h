@@ -43,16 +43,22 @@ class OpusFrame : public AudioDecoder::EncodedAudioFrame {
             bool is_primary_payload)
       : decoder_(decoder),
         payload_(std::move(payload)),
-        is_primary_payload_(is_primary_payload) {}
+        is_primary_payload_(is_primary_payload),
+		duration(SIZE_MAX) {}
 
   size_t Duration() const override {
-    int ret;
+	//initialization of duration is SIZE_MAX so if duration diffrent from SIZE_MAX means assigned new value. Each duration of frame cannot reach to MAX_SIZE
+	if (duration != SIZE_MAX) return duration;
+
+	int ret;
     if (is_primary_payload_) {
       ret = decoder_->PacketDuration(payload_.data(), payload_.size());
     } else {
       ret = decoder_->PacketDurationRedundant(payload_.data(), payload_.size());
     }
-    return (ret < 0) ? 0 : static_cast<size_t>(ret);
+
+    duration = ((ret < 0) ? 0 : static_cast<size_t>(ret));
+	return duration;
   }
 
   bool IsDtxPacket() const override { return payload_.size() <= 2; }
@@ -81,6 +87,7 @@ class OpusFrame : public AudioDecoder::EncodedAudioFrame {
   AudioDecoder* const decoder_;
   const rtc::Buffer payload_;
   const bool is_primary_payload_;
+  mutable size_t duration;
 };
 
 }  // namespace webrtc
